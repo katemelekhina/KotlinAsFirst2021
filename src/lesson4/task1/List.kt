@@ -230,13 +230,16 @@ fun convertToString(n: Int, base: Int): String {
         "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
         "u", "v", "w", "x", "y", "z"
     )
-    val result = mutableListOf<String>()
-    var number = n
-    while (number > 0) {
-        result.add(symbol[number % base])
-        number /= base
+    return if (n == 0) "0"
+    else {
+        val result = mutableListOf<String>()
+        var number = n
+        while (number > 0) {
+            result.add(symbol[number % base])
+            number /= base
+        }
+        result.reversed().joinToString(separator = "")
     }
-    return result.reversed().joinToString(separator = "")
 }
 
 /**
