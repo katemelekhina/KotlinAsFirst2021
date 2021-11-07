@@ -100,14 +100,10 @@ fun fib(n: Int): Int = TODO()
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var mindel = n
     for (i in 2..sqrt(n.toDouble()).toInt()) {
-        if (n % i == 0) {
-            mindel = i
-            break
-        }
+        if (n % i == 0) return i
     }
-    return mindel
+    return n
 }
 
 /**
@@ -115,8 +111,6 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-
-
 fun maxDivisor(n: Int): Int = TODO()
 
 /**
@@ -144,7 +138,6 @@ fun collatzSteps(x: Int): Int = TODO()
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    val k: Int
     var a = m
     var b = n
     var gmd = m
@@ -153,8 +146,7 @@ fun lcm(m: Int, n: Int): Int {
         else b -= a
         gmd = a
     }
-    k = (m * n) / gmd
-    return k
+    return (m * n) / gmd
 }
 
 /**
@@ -176,11 +168,10 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
 fun revert(n: Int): Int {
     var num = n
     var inverse = 0
-    while (num >= 0) {
+    while (num > 0) {
         inverse *= 10
         inverse += num % 10
         num /= 10
-        if (num == 0) break
     }
     return inverse
 }
@@ -264,13 +255,12 @@ fun squareSequenceDigit(n: Int): Int {
  */
 fun fibSequenceDigit(n: Int): Int {
     var k = 2
-    var number1 = 1
     var number2 = 1
     var sum = 1
     return if (n <= 2) 1
     else {
         while (n > k) {
-            number1 = number2
+            var number1 = number2
             number2 = sum
             sum = number1 + number2
             k += digitNumber(sum)

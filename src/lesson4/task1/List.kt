@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 4: списки
@@ -120,7 +121,13 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double = TODO()
+fun abs(v: List<Double>): Double {
+    var sum = 0.0
+    for (i in v) {
+        sum += i.pow(2)
+    }
+    return sqrt(sum)
+}
 
 /**
  * Простая (2 балла)
@@ -146,7 +153,15 @@ fun center(list: MutableList<Double>): MutableList<Double> = TODO()
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
-fun times(a: List<Int>, b: List<Int>): Int = TODO()
+fun times(a: List<Int>, b: List<Int>): Int {
+    var scalar = 0
+    for (i in 0 until a.size) {
+        val element1 = a[i]
+        val element2 = b[i]
+        scalar += element1 * element2
+    }
+    return scalar
+}
 
 /**
  * Средняя (3 балла)
@@ -208,7 +223,21 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    val symbol = listOf(
+        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+        "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
+        "u", "v", "w", "x", "y", "z"
+    )
+    val result = mutableListOf<String>()
+    var number = n
+    while (number > 0) {
+        result.add(symbol[number % base])
+        number /= base
+    }
+    return result.reversed().joinToString(separator = "")
+}
 
 /**
  * Средняя (3 балла)
@@ -241,7 +270,25 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    val romanNumeral = listOf(
+        "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"
+    )
+    val arabicNumeral = listOf(
+        1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1
+    )
+    val result = mutableListOf<String>()
+    var number = n
+    var i = 0
+    while (number != 0) {
+        if (number - arabicNumeral[i] < 0) i++
+        else {
+            result.add(romanNumeral[i])
+            number -= arabicNumeral[i]
+        }
+    }
+    return result.joinToString(separator = "")
+}
 
 /**
  * Очень сложная (7 баллов)
