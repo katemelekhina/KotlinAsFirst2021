@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -74,7 +76,36 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val parts = str.split(" ")
+    try {
+        val day = parts[0].toInt()
+        val name = parts[1]
+        val year = parts[2].toInt()
+        var month = -1
+        when (name) {
+            "января" -> month = 1
+            "февраля" -> month = 2
+            "марта" -> month = 3
+            "апреля" -> month = 4
+            "мая" -> month = 5
+            "июня" -> month = 6
+            "июля" -> month = 7
+            "августа" -> month = 8
+            "сентября" -> month = 9
+            "октября" -> month = 10
+            "ноября" -> month = 11
+            "декабря" -> month = 12
+        }
+        return if (month != -1 && day in 1..daysInMonth(month, year))
+            String.format("%02d.%02d.%d", day, month, year)
+        else ""
+    } catch (e: NumberFormatException) {
+        return ""
+    } catch (l: IndexOutOfBoundsException) {
+        return ""
+    }
+}
 
 /**
  * Средняя (4 балла)
@@ -114,7 +145,21 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    val parts = jumps.split(" ")
+    return try {
+        var max = -1
+        for (part in parts) {
+            if (part != "-" && part != "%") {
+                val number = part.toInt()
+                if (number > max) max = number
+            }
+        }
+        max
+    } catch (e: NumberFormatException) {
+        -1
+    }
+}
 
 /**
  * Сложная (6 баллов)
