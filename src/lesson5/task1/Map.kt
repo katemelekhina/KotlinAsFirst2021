@@ -154,7 +154,15 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
  *     mapOf("Emergency" to "911", "Police" to "02")
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
-fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> = TODO()
+fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
+    val result = mutableMapOf<String, String>()
+    result.putAll(mapA)
+    for ((key, value) in mapB) {
+        if (key in result && value != result[key]) result[key] = result[key] + ", " + mapB[key]
+        else result[key] = value
+    }
+    return result
+}
 
 /**
  * Средняя (4 балла)
@@ -166,7 +174,23 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
-fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> = TODO()
+fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
+    val result = mutableMapOf<String, Double>()
+    val quantity = mutableMapOf<String, Int>()
+    for ((first, second) in stockPrices) {
+        if (result.contains(first)) {
+            result[first] = result[first]?.plus(second) as Double
+            quantity[first] = quantity[first]?.plus(1) as Int
+        } else {
+            result[first] = second
+            quantity[first] = 1
+        }
+    }
+    for ((key, value) in result) {
+        result[key] = value / quantity[key]!!
+    }
+    return result
+}
 
 /**
  * Средняя (4 балла)
@@ -183,7 +207,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String = TODO()
 
 /**
  * Средняя (3 балла)
