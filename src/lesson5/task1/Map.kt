@@ -155,8 +155,7 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
 fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
-    val result = mutableMapOf<String, String>()
-    result.putAll(mapA)
+    val result = mapA.toMutableMap()
     for ((key, value) in mapB) {
         if (key in result && value != result[key]) result[key] = result[key] + ", " + mapB[key]
         else result[key] = value
@@ -174,23 +173,9 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
-fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
-    val result = mutableMapOf<String, Double>()
-    val quantity = mutableMapOf<String, Int>()
-    for ((first, second) in stockPrices) {
-        if (result.contains(first)) {
-            result[first] = result[first]?.plus(second) as Double
-            quantity[first] = quantity[first]?.plus(1) as Int
-        } else {
-            result[first] = second
-            quantity[first] = 1
-        }
-    }
-    for ((key, value) in result) {
-        result[key] = value / quantity[key]!!
-    }
-    return result
-}
+fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> =
+    stockPrices.groupBy { it.first }
+        .mapValues { it.value.map { pair -> pair.second }.average() }
 
 /**
  * Средняя (4 балла)
@@ -232,7 +217,8 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
+fun extractRepeats(list: List<String>): Map<String, Int> =
+    list.groupingBy { it.first().toString() }.eachCount().filter { it.value > 1 }
 
 /**
  * Средняя (3 балла)
