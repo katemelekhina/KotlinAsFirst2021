@@ -218,7 +218,7 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
 fun extractRepeats(list: List<String>): Map<String, Int> =
-    list.groupingBy { it.first().toString() }.eachCount().filter { it.value > 1 }
+    list.groupingBy { it.toString() }.eachCount().filter { it.value > 1 }
 
 /**
  * Средняя (3 балла)
